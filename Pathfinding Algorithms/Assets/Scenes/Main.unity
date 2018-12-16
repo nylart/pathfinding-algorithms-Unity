@@ -188,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472702403}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 7.5, y: 20, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -202,6 +202,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 508484703}
+  - component: {fileID: 508484704}
   m_Layer: 0
   m_Name: MapData
   m_TagString: Untagged
@@ -222,6 +223,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508484704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 508484702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10582f2c3b3e8a49a0dfe4e6850dc0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 10
+  height: 5
+  textAsset: {fileID: 4900000, guid: 4b5895fcd5eda4b15ab163c2ca9226ba, type: 3}
+  textureMap: {fileID: 2800000, guid: 4bc20a4bfb86a4c8096af16746451356, type: 3}
+  resourcePath: Mapdata
 --- !u!1 &881749849
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a450052c27ee1594992d7cfdab641018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapData: {fileID: 508484704}
+  graph: {fileID: 1632589366}
 --- !u!4 &1889069571
 Transform:
   m_ObjectHideFlags: 0

@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public MapData mapData;
+    public Graph graph;
+
+    private void Start()
+    {
+        if (mapData != null && graph != null)
+        {
+            int[,] mapInstance = mapData.CreateMap();
+            graph.Init(mapInstance);
+
+            GraphView graphView = graph.gameObject.GetComponent<GraphView>();
+
+            if(graphView != null)
+            {
+                graphView.Init(graph);
+            }
+        }
+    }
 }
