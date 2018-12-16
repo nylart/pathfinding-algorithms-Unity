@@ -12,6 +12,9 @@ public class Graph : MonoBehaviour {
     int m_width;
     int m_height;
 
+    public int Width { get { return m_width; } }
+    public int Height {  get { return m_height; } }
+
     /// <summary>
     /// Every direction to check for neighbors: N, S, E, W, NE, SE, NW, SW
     /// </summary>

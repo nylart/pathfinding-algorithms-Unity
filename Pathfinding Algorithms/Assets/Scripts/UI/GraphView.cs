@@ -7,6 +7,7 @@ using UnityEngine;
 public class GraphView : MonoBehaviour {
 
     public GameObject nodeViewPrefab;
+    public NodeView[,] nodeViews;
     public Color baseColor = Color.white;
     public Color wallColor = Color.black;
 
@@ -16,33 +17,52 @@ public class GraphView : MonoBehaviour {
     /// <param name="graph"></param>
     public void Init(Graph graph)
     {
-        if (graph != null)
+        if (graph == null)
         {
-            foreach (Node n in graph.nodes)
+            Debug.LogWarning("GraphView: No graph to initialize!");
+            return;
+        }
+        nodeViews = new NodeView[graph.Width, graph.Height];
+
+        foreach (Node n in graph.nodes)
+        {
+            GameObject instance = Instantiate(nodeViewPrefab, Vector3.zero, Quaternion.identity);
+            NodeView nodeView = instance.GetComponent<NodeView>();
+
+            if (nodeView != null)
             {
-                GameObject instance = Instantiate(nodeViewPrefab, Vector3.zero, Quaternion.identity);
-                NodeView nodeView = instance.GetComponent<NodeView>();
+                nodeView.Init(n);
+                nodeViews[n.xIndex, n.yIndex] = nodeView;
 
-                if (nodeView != null)
+                if (n.nodeType == NodeType.Blocked)
                 {
-                    nodeView.Init(n);
-
-                    if(n.nodeType == NodeType.Blocked)
-                    {
-                        nodeView.ColorNode(wallColor);
-                    }
-                    else
-                    {
-                        nodeView.ColorNode(baseColor);
-                    }
+                    nodeView.ColorNode(wallColor);
+                }
+                else
+                {
+                    nodeView.ColorNode(baseColor);
                 }
             }
-
         }
-        else
+    }
+
+    /// <summary>
+    /// Color the nodes 
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <param name="color"></param>
+    public void ColorNodes(List<Node> nodes, Color color)
+    {
+        foreach (Node n in nodes)
         {
-            Debug.LogWarning("GraphView: No graph to initialize");
-            return;
+            if (n != null)
+            {
+                NodeView nodeView = nodeViews[n.xIndex, n.yIndex];
+                if(nodeView != null)
+                {
+                    nodeView.ColorNode(color);
+                }
+            }
         }
     }
     

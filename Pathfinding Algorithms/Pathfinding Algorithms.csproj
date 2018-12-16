@@ -244,6 +244,7 @@
     <Compile Include="Assets\Scripts\GameData\Graph.cs" />
     <Compile Include="Assets\Scripts\GameData\MapData.cs" />
     <Compile Include="Assets\Scripts\GameData\Node.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\UI\GraphView.cs" />
     <Compile Include="Assets\Scripts\UI\NodeView.cs" />
   </ItemGroup>
