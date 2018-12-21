@@ -13,11 +13,13 @@ public class GameController : MonoBehaviour {
     public int goalX = 15;
     public int goalY = 1;
 
-    private void Start()
+    public float timeStep = 0.1f;
+
+    void Start()
     {
         if (mapData != null && graph != null)
         {
-            int[,] mapInstance = mapData.CreateMap();
+            int[,] mapInstance = mapData.MakeMap();
             graph.Init(mapInstance);
 
             GraphView graphView = graph.gameObject.GetComponent<GraphView>();
@@ -33,6 +35,7 @@ public class GameController : MonoBehaviour {
                 Node startNode = graph.nodes[startX, startY];
                 Node goalNode = graph.nodes[goalX, goalY];
                 pathfinder.Init(graph, graphView, startNode, goalNode);
+                StartCoroutine(pathfinder.SearchRoutine(timeStep));
             }
 
         }

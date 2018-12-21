@@ -8,8 +8,8 @@ public enum NodeType
     Blocked = 1
 }
 
-
-public class Node : MonoBehaviour {
+public class Node
+{
     public NodeType nodeType = NodeType.Open;
 
     public int xIndex = -1;

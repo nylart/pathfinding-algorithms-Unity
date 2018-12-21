@@ -50,7 +50,10 @@ public class MapData : MonoBehaviour
             lines.AddRange(textData.Split(delimiters, System.StringSplitOptions.None)); // split the text file and preserve blank lines
             lines.Reverse();
         }
-
+        else
+        {
+            Debug.LogWarning("MAPDATA GetTextFromFile Error: invalid TextAsset");
+        }
         return lines;
     }
 
@@ -118,7 +121,7 @@ public class MapData : MonoBehaviour
     /// Create map 2d array and initialize
     /// </summary>
     /// <returns></returns>
-    public int[,] CreateMap()
+    public int[,] MakeMap()
     {
         List<string> lines = new List<string>();
 
@@ -145,7 +148,6 @@ public class MapData : MonoBehaviour
 
             }
         }
-
         return map;
     }
 }

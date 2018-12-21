@@ -56,7 +56,7 @@ public class Graph : MonoBehaviour {
                 // if this new node is of blocked type, then add it to the walls list
                 if(type == NodeType.Blocked)
                 {
-                    wallNodes.Add(newNode);
+                    wallNodes.Add((newNode));
                 }
             }
         }
