@@ -5,6 +5,9 @@ using UnityEngine;
 public class NodeView : MonoBehaviour {
 
     public GameObject tile;
+    public GameObject arrow;
+    Node m_node;
+
 
     [Range(0, 0.5f)]
     public float borderSize = 0.15f;
@@ -20,6 +23,8 @@ public class NodeView : MonoBehaviour {
             gameObject.name = "Node (" + node.xIndex + "," + node.yIndex + ")";
             gameObject.transform.position = node.position;
             tile.transform.localScale = new Vector3(1f - borderSize, 1f, 1f - borderSize);
+            m_node = node;
+            EnableObject(arrow, false);
         }
     }
 
@@ -48,4 +53,40 @@ public class NodeView : MonoBehaviour {
     {
         ColorNode(color, tile);
     }
+
+    /// <summary>
+    /// Enables or disables any game object passed
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="state"></param>
+    void EnableObject(GameObject go, bool state)
+    {
+        if(go != null)
+        {
+            go.SetActive(state);
+        }
+    }
+
+    /// <summary>
+    /// Show the arrow and point it to the next node 
+    /// </summary>
+    public void ShowArrow(Color color)
+    {
+        if(m_node != null && arrow != null && m_node.previousNode != null)
+        {
+            EnableObject(arrow, true);
+
+            // make arrow look at next node
+            Vector3 dirToPrevious = (m_node.previousNode.position - m_node.position).normalized;
+            arrow.transform.rotation = Quaternion.LookRotation(dirToPrevious);
+
+            Renderer arrowRenderer = arrow.GetComponent<Renderer>();
+            if(arrowRenderer != null)
+            {
+                arrowRenderer.material.color = color;
+            }
+        }
+    }
+
+
 }

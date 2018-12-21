@@ -21,6 +21,8 @@ public class Pathfinder : MonoBehaviour {
     public Color frontierColor = Color.yellow;
     public Color exploredColor = Color.grey;
     public Color pathColor = Color.cyan;
+    public Color arrowColor = new Color32(216, 216, 216, 255);
+    public Color highlightColor = new Color32(216, 216, 128, 255);
 
     public bool isComplete = false;
     int m_iterations = 0;
@@ -84,7 +86,7 @@ public class Pathfinder : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// Change the colors of nodes
     /// </summary>
     /// <param name="graphView"></param>
     /// <param name="start"></param>
@@ -108,6 +110,12 @@ public class Pathfinder : MonoBehaviour {
             graphView.ColorNodes(m_exploredNodes, exploredColor);
         }
 
+        if(m_pathNodes != null && m_pathNodes.Count > 0)
+        {
+            graphView.ColorNodes(m_pathNodes, pathColor);
+        }
+
+
         // Set up the start node
         NodeView startNodeView = graphView.nodeViews[start.xIndex, start.yIndex];
         if (startNodeView != null)
@@ -123,6 +131,11 @@ public class Pathfinder : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Explore the graph
+    /// </summary>
+    /// <param name="timeStep"></param>
+    /// <returns></returns>
     public IEnumerator SearchRoutine(float timeStep = 0.1f)
     {
         yield return null;
@@ -140,7 +153,23 @@ public class Pathfinder : MonoBehaviour {
                 }
 
                 ExpandFrontier(currentNode);
+
+                if (m_frontierNodes.Contains(m_goalNode))
+                {
+                    m_pathNodes = GetPathNodes(m_goalNode);
+                }
+
                 ShowColors();
+
+                if (m_graphView)
+                {
+                    m_graphView.ShowNodeArrows(m_frontierNodes.ToList(), arrowColor);
+
+                    if (m_frontierNodes.Contains(m_goalNode))
+                    {
+                        m_graphView.ShowNodeArrows(m_pathNodes, highlightColor);
+                    }
+                }
 
                 yield return new WaitForSeconds(timeStep);
             }
@@ -151,6 +180,10 @@ public class Pathfinder : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Adds the frontier's neighbors as new frontier nodes
+    /// </summary>
+    /// <param name="node"></param>
     void ExpandFrontier(Node node)
     {
         if (node != null)
@@ -165,5 +198,30 @@ public class Pathfinder : MonoBehaviour {
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Returns list of nodes in the path
+    /// </summary>
+    /// <param name="endNode"></param>
+    /// <returns></returns>
+    List<Node> GetPathNodes(Node endNode)
+    {
+        List<Node> path = new List<Node>();
+        if (endNode == null)
+        {
+            return path;
+        }
+        path.Add(endNode);
+
+        Node currentNode = endNode.previousNode;
+
+        while (currentNode != null)
+        {
+            // put the current node at the first spot
+            path.Insert(0, currentNode);
+            currentNode = currentNode.previousNode;
+        }
+        return path;
     }
 }
