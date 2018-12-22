@@ -84,6 +84,7 @@ public class Graph : MonoBehaviour {
         return (x >= 0 && x < m_width && y >= 0 && y < m_height);
     }
 
+    #region Neighbor-related
     /// <summary>
     /// Create and return a list of all neighboring nodes
     /// </summary>
@@ -120,5 +121,39 @@ public class Graph : MonoBehaviour {
     {
         return GetNeighbors(x, y, nodes, allDirections);
     }
+    #endregion
 
+    #region Calculating Distance
+    /// <summary>
+    /// Returns the distance between two nodes
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public float GetNodeDistance(Node source, Node target)
+    {
+        int dx = Mathf.Abs(source.xIndex - target.xIndex);
+        int dy = Mathf.Abs(source.yIndex - target.yIndex);
+
+        int min = Mathf.Min(dx, dy);
+        int max = Mathf.Max(dx, dy);
+
+        int diagonalSteps = min;
+        int straightSteps = max - min;
+        return (1.4f * diagonalSteps + straightSteps);
+    }
+
+    /// <summary>
+    /// http://artis.imag.fr/~Xavier.Decoret/resources/maths/manhattan/html/
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public int GetManhattanDistance(Node source, Node target)
+    {
+        int dx = Mathf.Abs(source.xIndex - target.xIndex);
+        int dy = Mathf.Abs(source.yIndex - target.yIndex);
+        return (dx + dy);
+    }
+    #endregion
 }

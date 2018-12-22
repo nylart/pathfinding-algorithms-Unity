@@ -28,6 +28,8 @@ public class NodeView : MonoBehaviour {
         }
     }
 
+    #region Node coloring
+
     /// <summary>
     /// Color a specific node
     /// </summary>
@@ -53,6 +55,8 @@ public class NodeView : MonoBehaviour {
     {
         ColorNode(color, tile);
     }
+
+    #endregion
 
     /// <summary>
     /// Enables or disables any game object passed
